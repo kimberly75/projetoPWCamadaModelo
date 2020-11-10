@@ -40,7 +40,8 @@ public class Professor extends Aluno implements Serializable {
     private String topicosdeinteresse;
 
     @NotNull(message = "A especialidade não pode ser null")
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
+    @JoinColumn(name = "especialidade_id" , referencedColumnName = "id", nullable = false)
     private Especialidade especialidade;
 
     public String getTitulacao() {

@@ -49,7 +49,8 @@ public class Nota implements Serializable {
     private Double media;
 
     @NotNull(message = "Os alunos não podem ser null")
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
+    @JoinColumn(name = "aluno_id" , referencedColumnName = "id", nullable = false)
     private Aluno aluno;
 
     public Integer getId() {

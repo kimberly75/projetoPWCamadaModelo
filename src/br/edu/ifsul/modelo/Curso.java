@@ -68,14 +68,11 @@ public class Curso implements Serializable {
 
     @NotNull(message = "A instituicao não pode ser null")
     @ManyToOne
-    @JoinColumn(name = "instituicao_id")
+    @JoinColumn(name = "instituicao_id" , referencedColumnName = "id", nullable = false)
     private Instituicao instituicao;
     
     @NotNull(message = "As disciplinas não podem ser null")
-    @OneToMany(
-        cascade = CascadeType.ALL,
-        orphanRemoval = true
-    )
+    @OneToMany(fetch = FetchType.EAGER)
     private List<Disciplina> disciplinas = new ArrayList<>();
 
     public Curso(){

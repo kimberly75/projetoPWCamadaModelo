@@ -7,8 +7,10 @@ package br.edu.ifsul.modelo;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -59,21 +61,20 @@ public class Disciplina implements Serializable {
     @Column(name = "conhecimentosMinimos", nullable = false)
     private String conhecimentosMinimos;
 
-    @ManyToMany
-    @JoinTable(name = "disciplina_has_aluno", joinColumns
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "alunos", joinColumns
             = {
-                @JoinColumn(name = "disciplina", referencedColumnName = "nome", 
+                @JoinColumn(name = "nome", referencedColumnName = "nome", 
                             nullable = false)}, inverseJoinColumns
             = {
                 @JoinColumn(name = "aluno", referencedColumnName = "nome", 
                             nullable = false)})
-    private List<Aluno> alunos;
+    private Set<Aluno> alunos = new HashSet<>();
     
-    /*@NotNull(message = "As notas não podem ser null")
-    @OneToMany(mappedBy = "disciplina", cascade = CascadeType.ALL,
-            orphanRemoval = true, fetch = FetchType.LAZY)
+    @NotNull(message = "As notas não podem ser null")
+    @OneToMany(fetch = FetchType.EAGER)
     private List<Nota> notas = new ArrayList<>();
-    */
+    
     public Disciplina(){
     }    
     
@@ -117,21 +118,21 @@ public class Disciplina implements Serializable {
         this.conhecimentosMinimos = conhecimentosMinimos;
     }
 
-    public List<Aluno> getAlunos() {
+    public Set<Aluno> getAlunos() {
         return alunos;
     }
 
-    public void setAlunos(List<Aluno> alunos) {
+    public void setAlunos(Set<Aluno> alunos) {
         this.alunos = alunos;
     }
-    /*
+
     public List<Nota> getNotas() {
         return notas;
     }
 
     public void setNotas(List<Nota> notas) {
         this.notas = notas;
-    }*/
+    }
 
     @Override
     public int hashCode() {
